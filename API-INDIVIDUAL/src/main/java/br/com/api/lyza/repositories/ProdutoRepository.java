@@ -3,9 +3,9 @@ package br.com.api.lyza.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.api.lyza.entities.Vendedor;
+import br.com.api.lyza.entities.Produto;
 
 @Repository
-public interface VendedorRepository extends JpaRepository<Vendedor, Integer> {
+public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
 }

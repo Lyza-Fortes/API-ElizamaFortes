@@ -1,6 +1,6 @@
 package br.com.api.lyza.entities;
 
-import jakarta.persistence.Column; 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,36 +9,30 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="tb_vendedor")
-public class Vendedor {
-	
+@Table(name="tb_categoria")
+public class Categoria {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_vendedor")
+	@Column(name="id_categoria")
 	private Integer id;
 	
 	@NotNull
-	@Column(name="cpf_vendedor")
-	private String cpf;
-	
-	@NotNull
-	@Column(name="nome_vendedor")
+	@Column(name="nome_categoria")
 	private String nome;
 	
 	@NotNull
-	@Column(name="setor_vendedor")
-	private String setor;
+	@Column(name="descricao_categoria")
+	private String descricao;
 
-	public Vendedor(Integer id, @NotNull String cpf, @NotNull String nome, @NotNull String setor) {
+	public Categoria(Integer id, @NotNull String nome, @NotNull String descricao) {
 		super();
 		this.id = id;
-		this.cpf = cpf;
 		this.nome = nome;
-		this.setor = setor;
+		this.descricao = descricao;
 	}
 
-	public Vendedor() {
+	public Categoria() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -51,14 +45,6 @@ public class Vendedor {
 		this.id = id;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -67,17 +53,17 @@ public class Vendedor {
 		this.nome = nome;
 	}
 
-	public String getSetor() {
-		return setor;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setSetor(String setor) {
-		this.setor = setor;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
 	public String toString() {
-		return "Vendedor [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", setor=" + setor + "]";
+		return "Categoria [id=" + id + ", nome=" + nome + ", descricao=" + descricao + "]";
 	}
-	
+
 }
