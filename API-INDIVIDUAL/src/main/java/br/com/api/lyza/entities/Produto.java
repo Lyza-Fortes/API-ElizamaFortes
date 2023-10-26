@@ -11,38 +11,40 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="tb_produto")
+@Table(name = "tb_produto")
 public class Produto {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_produto")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_produto")
 	private Integer id;
-	
+
 	@NotNull
-	@Column(name="nome_produto")
+	@Column(name = "nome_produto")
 	private String nome;
-	
+
 	@NotNull
-	@Column(name="descricao_produto")
+	@Column(name = "descricao_produto")
 	private String descricao;
-	
+
 	@NotNull
-	@Column(name="valor_unit")
+	@Column(name = "valor_unit")
 	private String valorUnit;
-	
+
 	@NotNull
-	@Column(name="qtd_estoque")
+	@Column(name = "qtd_estoque")
 	private String qtdEstoque;
-	
+
 	@ManyToOne
-	@JoinColumn(name="vendedor_id")
+	@JoinColumn(name = "vendedor_id")
 	private Vendedor vendedor;
-	
-	
+
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoria;
 
 	public Produto(Integer id, @NotNull String nome, @NotNull String descricao, @NotNull String valorUnit,
-			@NotNull String qtdEstoque, Vendedor vendedor) {
+			@NotNull String qtdEstoque, Vendedor vendedor, Categoria categoria) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -50,20 +52,12 @@ public class Produto {
 		this.valorUnit = valorUnit;
 		this.qtdEstoque = qtdEstoque;
 		this.vendedor = vendedor;
+		this.categoria = categoria;
 	}
 
 	public Produto() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-	
-
-	public Vendedor getVendedor() {
-		return vendedor;
-	}
-
-	public void setVendedor(Vendedor vendedor) {
-		this.vendedor = vendedor;
 	}
 
 	public Integer getId() {
@@ -106,14 +100,26 @@ public class Produto {
 		this.qtdEstoque = qtdEstoque;
 	}
 
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", valorUnit=" + valorUnit
-				+ ", qtdEstoque=" + qtdEstoque + ", vendedor=" + vendedor + "]";
+				+ ", qtdEstoque=" + qtdEstoque + ", vendedor=" + vendedor + ", categoria=" + categoria + "]";
 	}
-
-	
-	
-	
 
 }

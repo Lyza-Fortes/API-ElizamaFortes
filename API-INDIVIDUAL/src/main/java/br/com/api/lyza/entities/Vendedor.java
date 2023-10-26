@@ -22,15 +22,11 @@ public class Vendedor {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@OneToOne
-	@JoinColumn(name="categoria_id")
-	private Categoria categoria;
-
-	public Vendedor(Integer id, User user, Categoria categoria) {
+	
+	public Vendedor(Integer id, User user) {
 		super();
 		this.id = id;
 		this.user = user;
-		this.categoria = categoria;
 	}
 
 	public Vendedor() {
@@ -54,17 +50,10 @@ public class Vendedor {
 		this.user = user;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
 
 	@Override
 	public String toString() {
-		return "Vendedor [id=" + id + ", user=" + user + ", categoria=" + categoria + "]";
+		return "Vendedor [id=" + id + ", user=" + user + "]";
 	}
 	
 	

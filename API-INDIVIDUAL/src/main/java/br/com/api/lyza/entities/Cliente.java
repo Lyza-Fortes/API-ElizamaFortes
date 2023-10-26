@@ -21,17 +21,35 @@ public class Cliente {
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User user;
+	
+	@OneToOne
+	@JoinColumn(name="endereco_id")
+	private Endereco endereco;
+	
 
 	public Cliente() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Integer id, User user) {
+
+	public Cliente(Integer id, User user, Endereco endereco) {
 		super();
 		this.id = id;
 		this.user = user;
+		this.endereco = endereco;
 	}
+
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 
 	public Integer getId() {
 		return id;
