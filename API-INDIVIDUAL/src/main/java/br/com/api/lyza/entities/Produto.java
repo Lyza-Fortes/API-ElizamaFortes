@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -32,20 +34,36 @@ public class Produto {
 	@NotNull
 	@Column(name="qtd_estoque")
 	private String qtdEstoque;
+	
+	@ManyToOne
+	@JoinColumn(name="vendedor_id")
+	private Vendedor vendedor;
+	
+	
 
 	public Produto(Integer id, @NotNull String nome, @NotNull String descricao, @NotNull String valorUnit,
-			@NotNull String qtdEstoque) {
+			@NotNull String qtdEstoque, Vendedor vendedor) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.valorUnit = valorUnit;
 		this.qtdEstoque = qtdEstoque;
+		this.vendedor = vendedor;
 	}
 
 	public Produto() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	public Integer getId() {
@@ -91,8 +109,9 @@ public class Produto {
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", valorUnit=" + valorUnit
-				+ ", qtdEstoque=" + qtdEstoque + "]";
+				+ ", qtdEstoque=" + qtdEstoque + ", vendedor=" + vendedor + "]";
 	}
+
 	
 	
 	
