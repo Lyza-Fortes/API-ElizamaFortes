@@ -8,14 +8,16 @@ public class UserDTO {
     private String nomeCompleto;
     private String email;
     private String password;
+    private String cpf;
+    private LocalDate dataNascimento;
 	private String telefoneFixo;
 	private String celular;
-	private String cpf;
+	private Set<String> roles;
+	
     private String cep;
 	private String numero;
 	private String complementoAdicional;
-	private Set<String> roles;
-	private LocalDate dataNascimento;
+	
 
 	public UserDTO() {
 	}

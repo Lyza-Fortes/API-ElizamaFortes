@@ -27,11 +27,6 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-//	public void remover(Integer id) {
-//		User user = userRepository.findById(id).get();
-//		emailService.envioEmailEncerramentoConta(user);
-//		userRepository.deleteById(id);
-//	}
 	public User findById(Integer id) {
 		return userRepository.findById(id).get();
 	}

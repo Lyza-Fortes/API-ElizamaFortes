@@ -26,7 +26,10 @@ public class Cliente {
 	@JoinColumn(name="endereco_id")
 	private Endereco endereco;
 	
-
+	@OneToOne
+	@JoinColumn(name="pedido_id")
+	private Pedido pedido;
+	
 	public Cliente() {
 		super();
 		// TODO Auto-generated constructor stub

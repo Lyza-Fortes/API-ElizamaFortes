@@ -84,6 +84,11 @@ public class UserController {
 		User usuarioResumido = new User();
 		usuarioResumido.setEmail(user.getEmail());
 		usuarioResumido.setRoles(roles);
+		usuarioResumido.setCpf(user.getCpf());
+		usuarioResumido.setDataNascimento(user.getDataNascimento());
+		usuarioResumido.setTelefone(user.getTelefoneFixo());
+		usuarioResumido.setCelular(user.getCelular());
+		usuarioResumido.setNomeCompleto(user.getNomeCompleto());
 		String encodedPass = passwordEncoder.encode(user.getPassword());
 		usuarioResumido.setPassword(encodedPass);
 		userService.save(usuarioResumido);
@@ -95,7 +100,7 @@ public class UserController {
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
-				case "FUNCIONARIO":
+				case "VENDEDOR":
 					Role adminRole = roleRepository.findByName(TipoRoleEnum.ROLE_VENDEDOR)
 							.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
 					roles.add(adminRole);
@@ -109,9 +114,6 @@ public class UserController {
 			});
 		}
 
-		//emailService.envioEmailCadastro(user);
-		
-		
 		return ResponseEntity.status(HttpStatus.CREATED).body("Cadastro efetuado com sucesso!");
 	}
 

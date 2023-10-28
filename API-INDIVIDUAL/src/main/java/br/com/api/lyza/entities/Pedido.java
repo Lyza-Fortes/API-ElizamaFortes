@@ -37,7 +37,6 @@ public class Pedido {
             )
     private List<Produto> produtos;
 
-
 	@OneToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;

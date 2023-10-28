@@ -10,28 +10,37 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_vendedor")
+@Table(name = "tb_vendedor")
 public class Vendedor {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_vendedor")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_vendedor")
 	private Integer id;
 
+	@Column
+	private Boolean ativo;
+
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	
-	public Vendedor(Integer id, User user) {
+
+	public Vendedor(Integer id, Boolean ativo, User user) {
 		super();
 		this.id = id;
+		this.ativo = ativo;
 		this.user = user;
 	}
 
 	public Vendedor() {
-		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public Integer getId() {
@@ -50,12 +59,9 @@ public class Vendedor {
 		this.user = user;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Vendedor [id=" + id + ", user=" + user + "]";
 	}
-	
-	
-	
+
 }

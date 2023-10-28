@@ -8,40 +8,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.lyza.dto.ClienteDTO;
-import br.com.api.lyza.services.ClienteService;
+import br.com.api.lyza.dto.CategoriaDTO;
+import br.com.api.lyza.services.CategoriaService;
 
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController {
-	
+@RequestMapping("/categoria")
+public class CategoriaController {
+
 	@Autowired
-	ClienteService clienteService;
+	CategoriaService categoriaService;
 	
 	@GetMapping("/buscar/{id}")
-	public ClienteDTO buscarPorId(@PathVariable Integer id) {
-		return clienteService.buscarPorId(id);
+	public CategoriaDTO buscarPorId(@PathVariable Integer id) {
+		return categoriaService.buscarPorId(id);
 	}
 
 	@GetMapping("/listar")
-	public List<ClienteDTO> listarTodos() {
-		return clienteService.listarTodos();
+	public List<CategoriaDTO> listarTodos() {
+		return categoriaService.listarTodos();
+	}
+	
+	@PostMapping("/salvar")
+	public CategoriaDTO salvar(@Valid @RequestBody CategoriaDTO categoriaDTO) {
+		return categoriaService.salvar(categoriaDTO);
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public ClienteDTO atualizar(@PathVariable Integer id, @Valid @RequestBody ClienteDTO cliente) {
-		return clienteService.atualizar(id, cliente);
+	public CategoriaDTO atualizar(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO) {
+		return categoriaService.atualizar(id, categoriaDTO);
 	}
 	
 	@DeleteMapping("/remover/{id}")
 	public void remover(@PathVariable Integer id) {
-		clienteService.remover(id);
+		categoriaService.remover(id);
 	}
 	
-
+	
 }
