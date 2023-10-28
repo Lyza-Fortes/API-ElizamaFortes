@@ -56,7 +56,7 @@ public class SwaggerConfig {
                 .title("Documentação Projeto Individual | Cliente - Vendendor")
                 .description("Projeto Individual SpringBoot - Elizama De Sá Fortes Pedroza Salmeron")
                 .license("Apache license version 2.0")
-                .version("5.1.0")
+                .version("5.2.0")
                 .build();
         return apiInfo;
     }
