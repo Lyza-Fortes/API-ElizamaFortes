@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.api</groupId>
 	<artifactId>lyza</artifactId>
-	<version>5.2.0</version>
+	<version>5.3.0</version>
 	<name>API-INDIVIDUAL</name>
 	<description>individual api</description>
 	<properties>
