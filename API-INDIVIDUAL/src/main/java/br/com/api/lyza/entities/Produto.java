@@ -1,12 +1,20 @@
 package br.com.api.lyza.entities;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,45 +27,70 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Integer id;
 
-	@NotNull
+	@NotNull(message = "Campo nome do produto não pode ser nulo")
 	@Column(name = "nome_produto")
 	private String nome;
 
-	@NotNull
+	@NotNull(message = "Campo descrição do produto não pode ser nulo")
 	@Column(name = "descricao_produto")
 	private String descricao;
 
-	@NotNull
-	@Column(name = "valor_unit")
-	private String valorUnit;
+	@NotNull(message = "Campo data de fabricação não pode ser nulo")
+	@Column(name = "data_fab")
+	private LocalDate dataFab;
 
-	@NotNull
 	@Column(name = "qtd_estoque")
-	private String qtdEstoque;
+	private Integer qtdEstoque;
 
-	@ManyToOne
-	@JoinColumn(name = "vendedor_id")
-	private Vendedor vendedor;
+	@NotNull(message = "Campo valor unitário não pode ser nulo")
+	@Column(name = "valor_unit")
+	private Double valorUnit;
 
-	@ManyToOne
+	@Column(name = "ativo_produto")
+	private Boolean ativo = true;
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 
-	public Produto(Integer id, @NotNull String nome, @NotNull String descricao, @NotNull String valorUnit,
-			@NotNull String qtdEstoque, Vendedor vendedor, Categoria categoria) {
+	@ManyToOne
+	@JoinColumn(name = "funcionario_id")
+	private Vendedor vendedor;
+	
+	@ElementCollection
+	@CollectionTable(name = "pedido_produto", joinColumns = @JoinColumn(name = "produto_id"))
+	@MapKeyJoinColumn(name = "pedido_id")
+	private Map<Pedido, PedidoProduto> itemQuantidade = new HashMap<>();
+
+	// @ElementCollection
+	// @CollectionTable(
+	// name = "pedido_produto",
+	// joinColumns = @JoinColumn(name = "produto_id")
+	// )
+	// @MapKeyJoinColumn(name = "pedido_id")
+	// @NotNull(message="É necessário definir uma quantidade para comprar.")
+	// @Column(name = "quantidade")
+	// private List<Integer> itemQuantidade;
+
+	public Produto() {
+	}
+
+	public Produto(Integer id, @NotNull(message = "Campo nome do produto não pode ser nulo") String nome,
+			@NotNull(message = "Campo descrição do produto não pode ser nulo") String descricao,
+			@NotNull(message = "Campo data de fabricação não pode ser nulo") LocalDate dataFab, Integer qtdEstoque,
+			@NotNull(message = "Campo valor unitário não pode ser nulo") Double valorUnit, Boolean ativo,
+			Categoria categoria, Vendedor vendedor, Map<Pedido, PedidoProduto> itemQuantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.valorUnit = valorUnit;
+		this.dataFab = dataFab;
 		this.qtdEstoque = qtdEstoque;
-		this.vendedor = vendedor;
+		this.valorUnit = valorUnit;
+		this.ativo = ativo;
 		this.categoria = categoria;
-	}
-
-	public Produto() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.vendedor = vendedor;
+		this.itemQuantidade = itemQuantidade;
 	}
 
 	public Integer getId() {
@@ -84,28 +117,36 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public String getValorUnit() {
-		return valorUnit;
+	public LocalDate getDataFab() {
+		return dataFab;
 	}
 
-	public void setValorUnit(String valorUnit) {
-		this.valorUnit = valorUnit;
+	public void setDataFab(LocalDate dataFab) {
+		this.dataFab = dataFab;
 	}
 
-	public String getQtdEstoque() {
+	public Integer getQtdEstoque() {
 		return qtdEstoque;
 	}
 
-	public void setQtdEstoque(String qtdEstoque) {
+	public void setQtdEstoque(Integer qtdEstoque) {
 		this.qtdEstoque = qtdEstoque;
 	}
 
-	public Vendedor getVendedor() {
-		return vendedor;
+	public Double getValorUnit() {
+		return valorUnit;
 	}
 
-	public void setVendedor(Vendedor vendedor) {
-		this.vendedor = vendedor;
+	public void setValorUnit(Double valorUnit) {
+		this.valorUnit = valorUnit;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public Categoria getCategoria() {
@@ -116,10 +157,22 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	@Override
-	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", valorUnit=" + valorUnit
-				+ ", qtdEstoque=" + qtdEstoque + ", vendedor=" + vendedor + ", categoria=" + categoria + "]";
+	public Vendedor getVendedor() {
+		return vendedor;
 	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+	}
+
+	public Map<Pedido, PedidoProduto> getItemQuantidade() {
+		return itemQuantidade;
+	}
+
+	public void setItemQuantidade(Map<Pedido, PedidoProduto> itemQuantidade) {
+		this.itemQuantidade = itemQuantidade;
+	}
+
+	
 
 }

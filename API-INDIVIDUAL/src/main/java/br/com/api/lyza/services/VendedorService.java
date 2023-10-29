@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.lyza.dto.VendedorDTO;
+import br.com.api.lyza.dto.VendedorDTO2;
 import br.com.api.lyza.entities.Vendedor;
 import br.com.api.lyza.repositories.EnderecoRepository;
 import br.com.api.lyza.repositories.VendedorRepository;
@@ -33,13 +34,21 @@ public class VendedorService {
 		return infoVendedor;
 	}
 	
-	public VendedorDTO buscarFuncPorId(Integer id) {
-		VendedorDTO infoVendedor = new VendedorDTO();
+	public VendedorDTO2 buscarVendPorId(Integer id) {
+		VendedorDTO2 infoVendedor = new VendedorDTO2();
 		Vendedor vendedor = vendedorRepository.findById(id).get();
-		infoVendedor = converterVendedorDTO(vendedor);
+		infoVendedor = converterVendedorDTO2(vendedor);
 		return infoVendedor;
 	}
-
+	
+	public VendedorDTO2 converterVendedorDTO2(Vendedor vendedor) {
+		VendedorDTO2 vendedorConvertido = new VendedorDTO2();
+		vendedorConvertido.setNome(vendedor.getUser().getNomeCompleto());
+		vendedorConvertido.setNomeUsuario(vendedor.getUser().getNomeUsuario());
+		vendedorConvertido.setEmail(vendedor.getUser().getEmail());
+		return vendedorConvertido;
+	}
+	
 	public List<VendedorDTO> listarTodos() {
 		List<VendedorDTO> infoVendedors = new ArrayList<>();
 		List<Vendedor> vendedors = vendedorRepository.findAll();

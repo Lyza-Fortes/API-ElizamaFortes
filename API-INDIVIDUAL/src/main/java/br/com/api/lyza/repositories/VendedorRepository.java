@@ -8,5 +8,4 @@ import br.com.api.lyza.entities.Vendedor;
 @Repository
 public interface VendedorRepository extends JpaRepository<Vendedor, Integer> {
 
-	
 }

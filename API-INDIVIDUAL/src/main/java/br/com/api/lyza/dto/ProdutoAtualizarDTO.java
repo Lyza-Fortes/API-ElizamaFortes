@@ -2,18 +2,18 @@ package br.com.api.lyza.dto;
 
 import java.time.LocalDate;
 
-public class ProdutoDTO {
-	
+public class ProdutoAtualizarDTO {
+
 	private String nome;
 	private String descricao;
 	private LocalDate dataFab;
 	private Integer qtdEstoque;
 	private Double valorUnit;
 	private CategoriaDTO categoriaDTO;
-	private VendedorDTO2 vendedorDTO2;
+	private VendedorDTO vendedorDTO;
 
-	public ProdutoDTO(String nome, String descricao, LocalDate dataFab, Integer qtdEstoque, Double valorUnit,
-			CategoriaDTO categoriaDTO, VendedorDTO2 vendedorDTO2) {
+    public ProdutoAtualizarDTO(String nome, String descricao, LocalDate dataFab, Integer qtdEstoque, Double valorUnit,
+			CategoriaDTO categoriaDTO, VendedorDTO vendedorDTO) {
 		super();
 		this.nome = nome;
 		this.descricao = descricao;
@@ -21,12 +21,11 @@ public class ProdutoDTO {
 		this.qtdEstoque = qtdEstoque;
 		this.valorUnit = valorUnit;
 		this.categoriaDTO = categoriaDTO;
-		this.vendedorDTO2 = vendedorDTO2;
+		this.vendedorDTO = vendedorDTO;
 	}
 
-	public ProdutoDTO() {
+	public ProdutoAtualizarDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getNome() {
@@ -37,12 +36,12 @@ public class ProdutoDTO {
 		this.nome = nome;
 	}
 
-	public VendedorDTO2 getVendedorDTO2() {
-		return vendedorDTO2;
+	public VendedorDTO getFuncionarioDTO() {
+		return vendedorDTO;
 	}
 
-	public void setVendedorDTO2(VendedorDTO2 vendedorDTO2) {
-		this.vendedorDTO2 = vendedorDTO2;
+	public void setFuncionarioDTO(VendedorDTO vendedorDTO) {
+		this.vendedorDTO = vendedorDTO;
 	}
 
 	public String getDescricao() {
@@ -84,5 +83,5 @@ public class ProdutoDTO {
 	public void setCategoriaDTO(CategoriaDTO categoriaDTO) {
 		this.categoriaDTO = categoriaDTO;
 	}
-		
+
 }
