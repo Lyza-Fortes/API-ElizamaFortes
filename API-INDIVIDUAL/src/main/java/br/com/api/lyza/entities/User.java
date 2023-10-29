@@ -34,10 +34,13 @@ public class User {
     @Column(name = "nome_completo")
     private String nomeCompleto;
     
+	@NotNull(message = "Campo nome de usuario não pode ser nulo")
+	private String nomeUsuario;
+
     @Email
     @NotNull(message = "Campo e-mail não pode ser nulo")
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
-    @Column(name = "email_user")
+    @Column(name = "email")
     private String email;
     
     @CPF
@@ -60,7 +63,7 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull(message = "Campo senha não pode ser nulo")
-    @Column(name = "password_funcionario")
+    @Column(name = "password")
     private String password;
     
     @Column(name = "ativo_user")
@@ -70,7 +73,10 @@ public class User {
 	@JoinTable(name = "usuario_role", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
+	
+
 	public User(Integer id, @NotNull(message = "Campo nome de funcionário não pode ser nulo") String nomeCompleto,
+			@NotNull(message = "Campo nome de usuario não pode ser nulo") String nomeUsuario,
 			@Email @NotNull(message = "Campo e-mail não pode ser nulo") @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$") String email,
 			@CPF @Size(max = 14) @NotNull(message = "Campo CPF não pode ser nulo") String cpf,
 			@NotNull(message = "Campo data de nascimento não pode ser nulo") LocalDate dataNascimento,
@@ -80,6 +86,7 @@ public class User {
 		super();
 		this.id = id;
 		this.nomeCompleto = nomeCompleto;
+		this.nomeUsuario = nomeUsuario;
 		this.email = email;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
@@ -91,6 +98,14 @@ public class User {
 	}
 
 	public User() {
+	}
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 
 	public Integer getId() {
@@ -175,10 +190,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", nomeCompleto=" + nomeCompleto + ", email=" + email + ", cpf=" + cpf
-				+ ", dataNascimento=" + dataNascimento + ", telefone=" + telefone + ", celular=" + celular
-				+ ", password=" + password + ", ativo=" + ativo + ", roles=" + roles + "]";
+		return "User [id=" + id + ", nomeCompleto=" + nomeCompleto + ", nomeUsuario=" + nomeUsuario + ", email=" + email
+				+ ", cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", telefone=" + telefone + ", celular="
+				+ celular + ", password=" + password + ", ativo=" + ativo + ", roles=" + roles + "]";
 	}
-
 
 }

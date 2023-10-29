@@ -6,6 +6,7 @@ import java.util.Set;
 public class UserDTO {
 
     private String nomeCompleto;
+	private String nomeUsuario;
     private String email;
     private String password;
     private String cpf;
@@ -23,9 +24,10 @@ public class UserDTO {
 	}
 
 	public UserDTO(String nomeCompleto, String email, String password, String telefoneFixo, String celular, String cpf,
-			String cep, String numero, String complementoAdicional, Set<String> roles, LocalDate dataNascimento) {
+			String cep, String numero, String complementoAdicional, Set<String> roles, LocalDate dataNascimento, String nomeUsuario) {
 		super();
 		this.nomeCompleto = nomeCompleto;
+		this.nomeUsuario = nomeUsuario;
 		this.email = email;
 		this.password = password;
 		this.telefoneFixo = telefoneFixo;
@@ -36,6 +38,14 @@ public class UserDTO {
 		this.complementoAdicional = complementoAdicional;
 		this.roles = roles;
 		this.dataNascimento = dataNascimento;
+	}
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 
 	public String getNomeCompleto() {

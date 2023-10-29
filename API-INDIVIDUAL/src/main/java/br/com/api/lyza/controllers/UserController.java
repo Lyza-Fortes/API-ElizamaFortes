@@ -23,12 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.lyza.config.JWTUtil;
 import br.com.api.lyza.dto.LoginDTO;
 import br.com.api.lyza.dto.UserDTO;
+import br.com.api.lyza.entities.Cliente;
 import br.com.api.lyza.entities.Endereco;
 import br.com.api.lyza.entities.Role;
 import br.com.api.lyza.entities.User;
+import br.com.api.lyza.entities.Vendedor;
 import br.com.api.lyza.enums.TipoRoleEnum;
+import br.com.api.lyza.repositories.ClienteRepository;
 import br.com.api.lyza.repositories.EnderecoRepository;
 import br.com.api.lyza.repositories.RoleRepository;
+import br.com.api.lyza.repositories.UserRepository;
+import br.com.api.lyza.repositories.VendedorRepository;
 import br.com.api.lyza.services.ClienteService;
 import br.com.api.lyza.services.EnderecoService;
 import br.com.api.lyza.services.UserService;
@@ -43,9 +48,18 @@ public class UserController {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
+
+	@Autowired
+	UserRepository userRepository;
 	
 	@Autowired
 	ClienteService clienteService;
+
+	@Autowired
+	VendedorRepository vendedorRepository;
+
+	@Autowired
+	ClienteRepository clienteRepository;
 	
 	@Autowired
 	EnderecoService enderecoService;
@@ -89,9 +103,11 @@ public class UserController {
 		usuarioResumido.setTelefone(user.getTelefoneFixo());
 		usuarioResumido.setCelular(user.getCelular());
 		usuarioResumido.setNomeCompleto(user.getNomeCompleto());
+		usuarioResumido.setNomeUsuario(user.getNomeUsuario());
 		String encodedPass = passwordEncoder.encode(user.getPassword());
 		usuarioResumido.setPassword(encodedPass);
 		userService.save(usuarioResumido);
+		User userNovo = userService.save(usuarioResumido);
 		
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(TipoRoleEnum.ROLE_CLIENTE)
@@ -104,12 +120,19 @@ public class UserController {
 					Role adminRole = roleRepository.findByName(TipoRoleEnum.ROLE_VENDEDOR)
 							.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
 					roles.add(adminRole);
-										break;
+					Vendedor vendedor = new Vendedor();
+					vendedor.setUser(userRepository.findById(userNovo.getId()).get());
+					vendedorRepository.save(vendedor);
+					break;
 				case "CLIENTE":
 					Role userRole = roleRepository.findByName(TipoRoleEnum.ROLE_CLIENTE)
 							.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
 					roles.add(userRole);
-				
+					Cliente cliente = new Cliente();
+					cliente.setUser(userRepository.findById(userNovo.getId()).get());
+					cliente.setEndereco(enderecoNovo);
+					clienteRepository.save(cliente);
+					break;
 				}
 			});
 		}
@@ -127,23 +150,24 @@ public class UserController {
 
 			User user = userService.findByEmail(body.getEmail());
 			User usuarioResumido = new User();
+
+			usuarioResumido.setCelular(user.getCelular());
+			usuarioResumido.setCpf(user.getCpf());
+			usuarioResumido.setDataNascimento(user.getDataNascimento());
+			usuarioResumido.setId(user.getId());
+			usuarioResumido.setNomeCompleto(user.getNomeCompleto());
 			usuarioResumido.setEmail(user.getEmail());
 			usuarioResumido.setRoles(user.getRoles());
+			usuarioResumido.setPassword(user.getPassword());
+			usuarioResumido.setNomeUsuario(user.getNomeUsuario());
+			usuarioResumido.setTelefone(user.getTelefone());
 			String token = jwtUtil.generateTokenWithUserData(usuarioResumido);
 
-			//MessageResponseDTO retornoLogin = new MessageResponseDTO("Login efetuado com sucesso! Por favor copie o seu Token: Bearer "
-				//	+ token);
-			//return ResponseEntity.ok().body(retornoLogin);
-			
 			return ResponseEntity.status(HttpStatus.OK).body("Login efetuado com sucesso!\n\nToken:"+token);
 		} catch (AuthenticationException authExc) {
 			throw new RuntimeException("Credenciais Invalidas");
 		}
 	}
 
-//	@DeleteMapping("/remover/{id}")
-//	public void remover(@PathVariable Integer id) {
-//		userService.remover(id);
-//	}
 
 }

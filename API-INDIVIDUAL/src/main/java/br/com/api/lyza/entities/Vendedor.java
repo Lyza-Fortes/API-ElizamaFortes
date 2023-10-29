@@ -19,7 +19,7 @@ public class Vendedor {
 	private Integer id;
 
 	@Column
-	private Boolean ativo;
+	private Boolean ativo = true;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
